@@ -1,0 +1,233 @@
+:root {
+            --bg-purple-dark: #1f0138;
+            --bg-purple-mid: #3d0a68;
+            --bg-purple-light: #5e1191;
+            --bg-light-purple: #f8f5fd;
+            --gold-primary: #e0b44f;
+            --gold-gradient: linear-gradient(135deg, #f7d070 0%, #c4952b 100%);
+            --text-dark: #2a0845;
+            --text-body: #555555;
+            --text-white: #ffffff;
+            --text-subtle: #ebd8ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* ----------------------------------
+           SECTION 1: HERO HEADER
+        ----------------------------------- */
+        .hero-section {
+            background: radial-gradient(circle at 10% 20%, var(--bg-purple-light) 0%, var(--bg-purple-mid) 40%, var(--bg-purple-dark) 100%);
+            color: var(--text-white);
+            padding: 60px 20px 80px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-ring {
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 25px auto;
+            border-radius: 50%;
+            border: 3px solid var(--gold-primary);
+            box-shadow: 0 0 20px rgba(224, 180, 79, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(31, 1, 56, 0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .logo-content {
+            border: 1px solid var(--gold-primary);
+            border-radius: 50%;
+            width: 112px;
+            height: 112px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .logo-content i { color: var(--gold-primary); font-size: 1.1rem; margin-bottom: 2px; }
+        .logo-title { font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 1px; color: var(--text-white); line-height: 1.1; }
+        .logo-tagline { font-family: 'Great Vibes', cursive; font-size: 0.7rem; color: var(--gold-primary); margin-top: 2px; }
+
+        .presenter-tag { font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-primary); margin-bottom: 15px; font-weight: 600; }
+        .main-title { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 700; line-height: 1.1; margin-bottom: 5px; }
+        .masterclass-title { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(2.5rem, 6vw, 4.2rem); font-weight: 400; color: var(--text-subtle); margin-bottom: 15px; }
+        .tagline { font-family: 'Great Vibes', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem); color: var(--gold-primary); margin-bottom: 30px; }
+
+        .info-pills { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 35px; }
+        .pill { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px); padding: 10px 22px; border-radius: 30px; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 8px; }
+        .pill i { color: var(--gold-primary); }
+
+        .btn-gold {
+            display: inline-block;
+            background: var(--gold-gradient);
+            color: #21033d;
+            font-size: 0.95rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 15px 42px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(224, 180, 79, 0.4);
+        }
+
+        /* Wave separator beneath Hero */
+        .hero-wave {
+            background-color: #ffffff;
+            height: 40px;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            margin-top: -30px;
+            position: relative;
+            z-index: 3;
+        }
+
+        /* ----------------------------------
+           SECTION 2: ABOUT THE MASTERCLASS
+        ----------------------------------- */
+        .about-section { background-color: #ffffff; padding: 40px 20px 70px 20px; text-align: center; }
+        .about-container { max-width: 750px; margin: 0 auto; }
+        .section-subtitle { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold-primary); font-weight: 700; margin-bottom: 15px; }
+        .about-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--text-dark); font-weight: 600; margin-bottom: 20px; line-height: 1.25; }
+        .about-text { font-size: 1rem; line-height: 1.8; color: var(--text-body); font-weight: 400; }
+
+        /* ----------------------------------
+           SECTION 3: WHAT YOU'LL LEARN
+        ----------------------------------- */
+        .curriculum-section { background-color: var(--bg-light-purple); padding: 80px 20px; text-align: center; }
+        .curriculum-container { max-width: 850px; margin: 0 auto; }
+        .curriculum-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3rem); color: var(--text-dark); margin-bottom: 30px; }
+
+        .day-tabs { display: flex; justify-content: center; gap: 12px; margin-bottom: 35px; flex-wrap: wrap; }
+        .day-tab { background: #ffffff; border: 1px solid rgba(42, 8, 69, 0.15); padding: 10px 24px; border-radius: 30px; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); cursor: pointer; transition: all 0.3s ease; }
+        .day-tab:hover, .day-tab.active { background: var(--bg-purple-dark); color: var(--text-white); border-color: var(--bg-purple-dark); box-shadow: 0 4px 15px rgba(31, 1, 56, 0.2); }
+
+        .day-card { background: #ffffff; border: 1.5px solid var(--gold-primary); border-radius: 20px; padding: 40px 30px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04); margin-bottom: 40px; }
+        .day-badge { display: inline-block; background: #f0e6fa; color: var(--bg-purple-dark); font-size: 0.75rem; font-weight: 700; padding: 6px 18px; border-radius: 20px; text-transform: uppercase; margin-bottom: 15px; letter-spacing: 1px; }
+        .card-day-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--text-dark); margin-bottom: 12px; }
+        .card-day-desc { font-size: 0.95rem; color: var(--text-body); line-height: 1.6; max-width: 600px; margin: 0 auto; }
+
+        .topics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 15px; }
+        .topic-pill { background: #ffffff; border-radius: 12px; padding: 14px 20px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); text-align: left; font-size: 0.9rem; font-weight: 600; color: var(--text-dark); }
+        .topic-pill i { color: var(--bg-purple-dark); font-size: 1.1rem; }
+
+        /* ----------------------------------
+           SECTION 4: CHOOSE YOUR REGISTRATION
+        ----------------------------------- */
+        .pricing-section { background-color: #ffffff; padding: 80px 20px; text-align: center; }
+        .pricing-container { max-width: 800px; margin: 0 auto; }
+        .pricing-grid { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; margin-top: 30px; }
+
+        .price-card { flex: 1; min-width: 280px; max-width: 370px; border-radius: 24px; padding: 35px 25px; position: relative; text-align: center; }
+        
+        .price-card.early { background: var(--bg-purple-dark); color: #ffffff; border: 1px solid var(--bg-purple-dark); }
+        .price-card.late { background: #ffffff; color: var(--text-dark); border: 1px solid rgba(42, 8, 69, 0.15); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+        .badge-best { position: absolute; top: 15px; right: 15px; background: var(--gold-primary); color: #21033d; font-size: 0.65rem; font-weight: 700; padding: 4px 12px; border-radius: 12px; letter-spacing: 1px; }
+
+        .card-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px auto; font-size: 1.2rem; }
+        .early .card-icon { background: rgba(255,255,255,0.1); color: var(--gold-primary); }
+        .late .card-icon { background: #f0e6fa; color: var(--bg-purple-dark); }
+
+        .price-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 5px; }
+        .price-card .subtitle { font-size: 0.8rem; margin-bottom: 20px; opacity: 0.8; }
+        .price-amount { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; margin-bottom: 5px; }
+        .price-date { font-size: 0.75rem; margin-bottom: 25px; opacity: 0.7; }
+
+        .btn-outline {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 30px;
+            border: 1.5px solid var(--bg-purple-dark);
+            color: var(--bg-purple-dark);
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+
+        /* ----------------------------------
+           SECTION 5: PAYMENT DETAILS (BANK TRANSFER)
+        ----------------------------------- */
+        .payment-section { background-color: var(--bg-light-purple); padding: 60px 20px; text-align: center; }
+        .payment-card { max-width: 500px; margin: 0 auto; background: #ffffff; border-radius: 20px; padding: 35px 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+        .bank-details { display: flex; flex-direction: column; gap: 12px; margin: 25px 0 20px 0; }
+        .bank-row { background: var(--bg-light-purple); border-radius: 12px; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .bank-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; color: #888; text-transform: uppercase; }
+        .bank-value { font-weight: 700; color: var(--text-dark); font-size: 1rem; }
+        .payment-note { font-size: 0.8rem; color: #777; line-height: 1.4; }
+
+        /* ----------------------------------
+           SECTION 6: REGISTRATION FORM & FOOTER
+        ----------------------------------- */
+        .registration-section {
+            background: radial-gradient(circle at 10% 20%, var(--bg-purple-light) 0%, var(--bg-purple-mid) 40%, var(--bg-purple-dark) 100%);
+            color: #ffffff;
+            padding: 80px 20px 60px 20px;
+            text-align: center;
+        }
+
+        .form-container { max-width: 550px; margin: 0 auto; }
+        .form-group { text-align: left; margin-bottom: 22px; }
+        .form-group label { display: block; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; color: var(--gold-primary); margin-bottom: 8px; text-transform: uppercase; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255, 255, 255, 0.4); }
+        .form-group select option { background: #21033d; color: #fff; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--gold-primary); }
+
+        .btn-submit { width: 100%; border: none; font-size: 1rem; }
+
+        .footer-logo { margin-top: 60px; }
+        .footer-logo .logo-ring { width: 70px; height: 70px; margin-bottom: 15px; }
+        .footer-logo .logo-content { width: 60px; height: 60px; font-size: 0.4rem; }
+        .footer-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #ffffff; }
+        .footer-tagline { font-size: 0.75rem; letter-spacing: 2px; color: var(--gold-primary); text-transform: uppercase; margin-top: 4px; }
+        .copyright { font-size: 0.75rem; opacity: 0.5; margin-top: 25px; }
+    

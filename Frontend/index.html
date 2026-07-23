@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handmade Crafts Masterclass | Inner Beauty Palace</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="index.css">
+
+    </head>
+<body>
+
+    <!-- 1. HERO HEADER -->
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="logo-ring">
+                <div class="logo-content">
+                    <i class="fa-solid fa-crown"></i>
+                    <div class="logo-title">INNER BEAUTY<br>PALACE</div>
+                    <div class="logo-tagline">Thriving To Majesty</div>
+                </div>
+            </div>
+
+            <p class="presenter-tag">Inner Beauty Palace Presents</p>
+            <h1 class="main-title">Handmade Crafts</h1>
+            <h2 class="masterclass-title">Masterclass</h2>
+            <p class="tagline">A 5-Day Virtual Training on Fashion-preneurship</p>
+
+            <div class="info-pills">
+                <div class="pill">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>7th – 11th September 2025</span>
+                </div>
+                <div class="pill">
+                    <i class="fa-solid fa-globe"></i>
+                    <span>Virtual • Online</span>
+                </div>
+            </div>
+
+            <a href="#register" class="btn-gold">REGISTER NOW</a>
+        </div>
+    </section>
+    <div class="hero-wave"></div>
+
+    <!-- 2. ABOUT THE MASTERCLASS -->
+    <section class="about-section">
+        <div class="about-container">
+            <p class="section-subtitle">ABOUT THE MASTERCLASS</p>
+            <h2 class="about-title">Craft your passion into a thriving business</h2>
+            <p class="about-text">
+                Join us for an immersive 5-day journey where creativity meets commerce. Whether you are a complete beginner or someone looking to scale your handmade fashion craft, this masterclass gives you the skills, tools, and confidence to build a profitable Fashion-preneurship from scratch.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3. WHAT YOU'LL LEARN -->
+    <section class="curriculum-section">
+        <div class="curriculum-container">
+            <p class="section-subtitle">WHAT YOU'LL LEARN</p>
+            <h2 class="curriculum-title">5 Days of Transformation</h2>
+
+            <div class="day-tabs">
+                <button class="day-tab active" onclick="switchDay(1)">Day 1</button>
+                <button class="day-tab" onclick="switchDay(2)">Day 2</button>
+                <button class="day-tab" onclick="switchDay(3)">Day 3</button>
+                <button class="day-tab" onclick="switchDay(4)">Day 4</button>
+                <button class="day-tab" onclick="switchDay(5)">Day 5</button>
+            </div>
+
+            <div class="day-card">
+                <span class="day-badge" id="cardDayBadge">DAY 1</span>
+                <h3 class="card-day-title" id="cardDayTitle">Craft Foundations</h3>
+                <p class="card-day-desc" id="cardDayDesc">
+                    How to make handcrafted fashion items such as Fascinators, Berets, and more signature pieces.
+                </p>
+            </div>
+
+            <div class="topics-grid">
+                <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Fascinators & Berets</span></div>
+                <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Tools & Material Sourcing</span></div>
+                <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Zero-capital Business Launch</span></div>
+                <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Smartphone Content Creation</span></div>
+                <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Social Media Strategy</span></div>
+                <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Fashion as a Mountain of Influence</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CHOOSE YOUR REGISTRATION -->
+    <section class="pricing-section">
+        <div class="pricing-container">
+            <p class="section-subtitle">INVESTMENT</p>
+            <h2 class="about-title">Choose Your Registration</h2>
+
+            <div class="pricing-grid">
+                <!-- Early Bird Card -->
+                <div class="price-card early">
+                    <span class="badge-best">BEST VALUE</span>
+                    <div class="card-icon"><i class="fa-solid fa-crown"></i></div>
+                    <h3>Early Bird</h3>
+                    <p class="subtitle">Register before 25th August</p>
+                    <div class="price-amount">₦5,000</div>
+                    <p class="price-date">Ends 25th August 2025</p>
+                    <a href="#payment" class="btn-gold" style="width: 100%;">SECURE MY SPOT</a>
+                </div>
+
+                <!-- Late Registration Card -->
+                <div class="price-card late">
+                    <div class="card-icon"><i class="fa-solid fa-crown"></i></div>
+                    <h3>Late Registration</h3>
+                    <p class="subtitle">After 25th August</p>
+                    <div class="price-amount">₦7,000</div>
+                    <p class="price-date">26th August – 6th September 2025</p>
+                    <a href="#payment" class="btn-outline">REGISTER NOW</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. BANK TRANSFER DETAILS -->
+    <section class="payment-section" id="payment">
+        <div class="payment-card">
+            <p class="section-subtitle">PAYMENT DETAILS</p>
+            <h3 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--text-dark);">Bank Transfer</h3>
+
+            <div class="bank-details">
+                <div class="bank-row">
+                    <span class="bank-label">Account Number</span>
+                    <span class="bank-value">0679590841</span>
+                </div>
+                <div class="bank-row">
+                    <span class="bank-label">Bank</span>
+                    <span class="bank-value">GTBank (GTB)</span>
+                </div>
+                <div class="bank-row">
+                    <span class="bank-label">Account Name</span>
+                    <span class="bank-value">Susan Anuoluwapo Alabi</span>
+                </div>
+            </div>
+
+            <p class="payment-note">After payment, complete the registration form below to secure your spot.</p>
+        </div>
+    </section>
+
+    <!-- 6. REGISTRATION FORM & FOOTER -->
+    <section class="registration-section" id="register">
+        <div class="form-container">
+            <p class="section-subtitle">JOIN US</p>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 8px;">Register for the Masterclass</h2>
+            <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 35px;">Fill in your details below after making payment</p>
+
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="fullName">FULL NAME *</label>
+                    <input type="text" id="fullName" required placeholder="e.g. Amara Johnson">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">EMAIL ADDRESS *</label>
+                    <input type="email" id="email" required placeholder="yourname@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">WHATSAPP NUMBER *</label>
+                    <input type="tel" id="phone" required placeholder="+234 800 000 0000">
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">GENDER *</label>
+                    <select id="gender" required>
+                        <option value="" disabled selected>Select gender</option>
+                        <option value="Female">Female</option>
+                        <option value="Male">Male</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="location">CITY & COUNTRY *</label>
+                    <input type="text" id="location" required placeholder="e.g. Lagos, Nigeria">
+                </div>
+
+                <div class="form-group">
+                    <label for="motivation">WHY DO YOU WANT TO JOIN THIS TRAINING? *</label>
+                    <textarea id="motivation" rows="4" required placeholder="Share your motivation for joining the masterclass..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-gold btn-submit">COMPLETE REGISTRATION</button>
+            </form>
+
+            <div id="responseMsg" style="margin-top: 15px;"></div>
+
+            <div class="student-lookup-box" style="margin-top: 40px; background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px;">
+    <h3 style="color: var(--gold-primary); font-family: 'Playfair Display', serif; margin-bottom: 10px;">Already Registered?</h3>
+    <p style="font-size: 0.85rem; margin-bottom: 15px;">Enter your email address or Registration Code to view your status:</p>
+    
+    <div style="display: flex; gap: 10px; max-width: 450px; margin: 0 auto;">
+        <input type="text" id="lookupInput" placeholder="Enter Email or IBP Code" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.1); color: white;">
+        <button onclick="checkRegistration()" class="btn-gold" style="padding: 10px 20px; font-size: 0.8rem;">CHECK</button>
+    </div>
+
+    <div id="lookupResult" style="margin-top: 20px; text-align: left; font-size: 0.9rem;"></div>
+</div>
+
+            <!-- Footer Logo -->
+            <div class="footer-logo">
+                <div class="logo-ring">
+                    <div class="logo-content">
+                        <i class="fa-solid fa-crown" style="font-size: 0.7rem;"></i>
+                    </div>
+                </div>
+                <p class="footer-title">Inner Beauty Palace</p>
+                <p class="footer-tagline">THRIVING IN MAJESTY</p>
+                <p class="copyright">© 2025 Inner Beauty Palace. All rights reserved.</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="index.js"></script>
+</body>
+</html>
+
+<script>
+async function checkRegistration() {
+    const query = document.getElementById('lookupInput').value.trim();
+    const resultDiv = document.getElementById('lookupResult');
+
+    if (!query) return alert('Please enter your email or registration code.');
+
+    resultDiv.innerHTML = "Searching...";
+
+    try {
+        const response = await fetch('http://localhost:5000/api/student/lookup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query })
+        });
+
+        const res = await response.json();
+
+        if (response.ok) {
+            const data = res.data;
+            resultDiv.innerHTML = `
+                <div style="background: rgba(224, 180, 79, 0.15); border: 1px solid var(--gold-primary); padding: 15px; border-radius: 10px; color: white;">
+                    <p style="color: var(--gold-primary); font-weight: bold;">Status: Registered ✅</p>
+                    <p><strong>Code:</strong> ${data.registrationCode}</p>
+                    <p><strong>Name:</strong> ${data.fullName}</p>
+                    <p><strong>Email:</strong> ${data.email}</p>
+                    <p><strong>Phone:</strong> ${data.phone}</p>
+                    <p><strong>Location:</strong> ${data.location}</p>
+                </div>
+            `;
+        } else {
+            resultDiv.innerHTML = `<p style="color: #ff8080;">${res.error}</p>`;
+        }
+    } catch (err) {
+        resultDiv.innerHTML = `<p style="color: #ff8080;">Server error. Please try again.</p>`;
+    }
+}
+</script>
