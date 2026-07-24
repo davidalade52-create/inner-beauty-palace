@@ -3,9 +3,8 @@ const cors = require('cors');
 const { Sequelize, DataTypes } = require('sequelize');
 
 const app = express();
-app.get('/', (req, res) => {
-  res.send('Welcome to Inner Beauty Palace API!');
-});
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../')));
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
