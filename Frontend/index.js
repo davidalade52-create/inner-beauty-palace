@@ -1,65 +1,67 @@
 // Curriculum Dynamic Content Switcher
-        const dayData = {
-            1: { badge: "DAY 1", title: "Craft Foundations", desc: "How to make handcrafted fashion items such as Fascinators, Berets, and more signature pieces." },
-            2: { badge: "DAY 2", title: "Tools & Material Sourcing", desc: "Sourcing premium materials affordably and mastering essential tool handling for professional finish." },
-            3: { badge: "DAY 3", title: "Zero-capital Business Launch", desc: "Building your business structure and generating pre-orders with zero initial production capital." },
-            4: { badge: "DAY 4", title: "Smartphone Content & Strategy", desc: "Capturing stunning photos, editing videos with your phone, and driving sales through social media." },
-            5: { badge: "DAY 5", title: "Fashion as Influence", desc: "Mistakes to avoid in Fashion-preneurship and a deeper understanding of fashion as a mountain of influence." }
-        };
+const dayData = {
+    1: { badge: "DAY 1", title: "Craft Foundations", desc: "How to make handcrafted fashion items such as Fascinators, Berets, and more signature pieces." },
+    2: { badge: "DAY 2", title: "Tools & Material Sourcing", desc: "Sourcing premium materials affordably and mastering essential tool handling for professional finish." },
+    3: { badge: "DAY 3", title: "Zero-capital Business Launch", desc: "Building your business structure and generating pre-orders with zero initial production capital." },
+    4: { badge: "DAY 4", title: "Smartphone Content & Strategy", desc: "Capturing stunning photos, editing videos with your phone, and driving sales through social media." },
+    5: { badge: "DAY 5", title: "Fashion as Influence", desc: "Mistakes to avoid in Fashion-preneurship and a deeper understanding of fashion as a mountain of influence." }
+};
 
-        function switchDay(dayNumber) {
-            document.querySelectorAll('.day-tab').forEach((tab, index) => {
-                if (index + 1 === dayNumber) {
-                    tab.classList.add('active');
-                } else {
-                    tab.classList.remove('active');
-                }
-            });
-
-            document.getElementById('cardDayBadge').innerText = dayData[dayNumber].badge;
-            document.getElementById('cardDayTitle').innerText = dayData[dayNumber].title;
-            document.getElementById('cardDayDesc').innerText = dayData[dayNumber].desc;
+function switchDay(dayNumber) {
+    document.querySelectorAll('.day-tab').forEach((tab, index) => {
+        if (index + 1 === dayNumber) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
         }
+    });
 
-        // Form Submit Handler
-        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const responseMsg = document.getElementById('responseMsg');
-            responseMsg.innerText = "Submitting registration...";
-            responseMsg.style.color = "#ebd8ff";
+    document.getElementById('cardDayBadge').innerText = dayData[dayNumber].badge;
+    document.getElementById('cardDayTitle').innerText = dayData[dayNumber].title;
+    document.getElementById('cardDayDesc').innerText = dayData[dayNumber].desc;
+}
 
-            const payload = {
-                fullName: document.getElementById('fullName').value,
-                email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                gender: document.getElementById('gender').value,
-                location: document.getElementById('location').value,
-                motivation: document.getElementById('motivation').value
-            };
+// Form Submit Handler
+document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const responseMsg = document.getElementById('responseMsg');
+    responseMsg.innerText = "Submitting registration...";
+    responseMsg.style.color = "#ebd8ff";
 
-            try {
-                const response = await fetch('/api/student/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
+    const payload = {
+        fullName: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        gender: document.getElementById('gender').value,
+        location: document.getElementById('location').value,
+        motivation: document.getElementById('motivation').value
+    };
 
-                const result = await response.json();
+    try {
+        const response = await fetch('/api/student/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
 
-                if (response.ok) {
-                    responseMsg.style.color = "#80ff80";
-                    responseMsg.innerText = "Registration completed successfully!";
-                    document.getElementById('registrationForm').reset();
-                } else {
-                    responseMsg.style.color = "#ff8080";
-                    responseMsg.innerText = result.error || "Registration failed.";
-                }
-            } catch (error) {
-                responseMsg.style.color = "#ff8080";
-                responseMsg.innerText = "Server connection error.";
-            }
+        const result = await response.json();
 
-            async function checkRegistration() {
+        if (response.ok) {
+            responseMsg.style.color = "#80ff80";
+            responseMsg.innerText = "Registration completed successfully!";
+            document.getElementById('registrationForm').reset();
+        } else {
+            responseMsg.style.color = "#ff8080";
+            responseMsg.innerText = result.error || "Registration failed.";
+        }
+    } catch (error) {
+        responseMsg.style.color = "#ff8080";
+        responseMsg.innerText = "Server connection error.";
+    }
+});
+
+// Student Registration Lookup Function
+async function checkRegistration() {
     const query = document.getElementById('lookupInput').value.trim();
     const resultDiv = document.getElementById('lookupResult');
 
@@ -89,10 +91,9 @@
                 </div>
             `;
         } else {
-            resultDiv.innerHTML = `<p style="color: #ff8080;">${res.error}</p>`;
+            resultDiv.innerHTML = `<p style="color: #ff8080;">${res.error || 'Registration record not found.'}</p>`;
         }
     } catch (err) {
         resultDiv.innerHTML = `<p style="color: #ff8080;">Server error. Please try again.</p>`;
     }
 }
-        });
