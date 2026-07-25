@@ -62,38 +62,47 @@ document.getElementById('registrationForm').addEventListener('submit', async (e)
 
 // Student Registration Lookup Function
 async function checkRegistration() {
-    const query = document.getElementById('lookupInput').value.trim();
+    const queryInput = document.getElementById('lookupInput');
     const resultDiv = document.getElementById('lookupResult');
 
-    if (!query) return alert('Please enter your email or registration code.');
+    if (!queryInput || !queryInput.value.trim()) {
+        return alert('Please enter your email or registration code.');
+    }
 
-    resultDiv.innerHTML = "Searching...";
+    if (!resultDiv) {
+        console.error("Missing <div id='lookupResult'> in HTML!");
+        return;
+    }
+
+    const query = queryInput.value.trim();
+    resultDiv.innerHTML = "<p style='color: #ebd8ff; margin-top: 10px;'>Searching...</p>";
 
     try {
         const response = await fetch('/api/student/lookup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query })
+            body: JSON.stringify({ query: query })
         });
 
         const res = await response.json();
 
-        if (response.ok) {
+        if (response.ok && res.data) {
             const data = res.data;
             resultDiv.innerHTML = `
-                <div style="background: rgba(224, 180, 79, 0.15); border: 1px solid var(--gold-primary); padding: 15px; border-radius: 10px; color: white;">
-                    <p style="color: var(--gold-primary); font-weight: bold;">Status: Registered ✅</p>
-                    <p><strong>Code:</strong> ${data.registrationCode}</p>
-                    <p><strong>Name:</strong> ${data.fullName}</p>
-                    <p><strong>Email:</strong> ${data.email}</p>
-                    <p><strong>Phone:</strong> ${data.phone}</p>
-                    <p><strong>Location:</strong> ${data.location}</p>
+                <div style="background: rgba(224, 180, 79, 0.15); border: 1px solid var(--gold-primary); padding: 15px; border-radius: 10px; color: white; margin-top: 15px;">
+                    <p style="color: var(--gold-primary); font-weight: bold; margin-bottom: 5px;">Status: Registered ✅</p>
+                    <p style="margin: 3px 0;"><strong>Code:</strong> ${data.registrationCode || 'N/A'}</p>
+                    <p style="margin: 3px 0;"><strong>Name:</strong> ${data.fullName}</p>
+                    <p style="margin: 3px 0;"><strong>Email:</strong> ${data.email}</p>
+                    <p style="margin: 3px 0;"><strong>Phone:</strong> ${data.phone}</p>
+                    <p style="margin: 3px 0;"><strong>Location:</strong> ${data.location}</p>
                 </div>
             `;
         } else {
-            resultDiv.innerHTML = `<p style="color: #ff8080;">${res.error || 'Registration record not found.'}</p>`;
+            resultDiv.innerHTML = `<p style="color: #ff8080; margin-top: 10px;">${res.error || 'Registration record not found.'}</p>`;
         }
     } catch (err) {
-        resultDiv.innerHTML = `<p style="color: #ff8080;">Server error. Please try again.</p>`;
+        console.error('Lookup JS error:', err);
+        resultDiv.innerHTML = `<p style="color: #ff8080; margin-top: 10px;">Failed to fetch status. Check internet connection.</p>`;
     }
 }
