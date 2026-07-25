@@ -80,20 +80,20 @@ app.post('/api/student/register', async (req, res) => {
 // Student Lookup: Allow students to check details using Email or Code
 app.post('/api/student/lookup', async (req, res) => {
     try {
-        const { query } = req.body; // Can be email or registrationCode
+        const { query } = req.body;
 
         if (!query) {
             return res.status(400).json({ error: 'Please enter your email or registration code.' });
         }
 
-        const student = await Registration.findOne({
-            where: {
-                [Op.or]: [
-                    { email: query },
-                    { registrationCode: query }
-                ]
-            }
-        });
+        const cleanQuery = query.trim().toLowerCase();
+
+        // Search database records using case-insensitive matching
+        const allStudents = await Registration.findAll();
+        const student = allStudents.find(s => 
+            (s.email && s.email.toLowerCase() === cleanQuery) || 
+            (s.registrationCode && s.registrationCode.toLowerCase() === cleanQuery)
+        );
 
         if (!student) {
             return res.status(404).json({ error: 'No registration record found.' });
