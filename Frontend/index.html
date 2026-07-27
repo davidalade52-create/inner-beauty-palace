@@ -11,8 +11,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="index.css">
-
-    </head>
+</head>
 <body>
 
     <!-- 1. HERO HEADER -->
@@ -194,18 +193,16 @@
             <div id="responseMsg" style="margin-top: 15px;"></div>
 
             <div class="student-lookup-box" style="margin-top: 40px; background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(224, 180, 79, 0.3); text-align: center;">
-    <h3 style="color: var(--gold-primary); font-family: 'Playfair Display', serif; margin-bottom: 10px;">Already Registered?</h3>
-    <p style="font-size: 0.85rem; margin-bottom: 15px; color: #ebd8ff;">Enter your email address or Registration Code to view your status:</p>
-    
-    <div style="display: flex; gap: 10px; max-width: 450px; margin: 0 auto;">
-        <input type="text" id="lookupInput" placeholder="Enter Email or IBP Code" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(0, 0, 0, 0.2); color: white;">
-        <button type="button" onclick="checkRegistration()" class="btn-gold" style="padding: 10px 20px; border-radius: 8px; cursor: pointer;">CHECK</button>
-    </div>
+                <h3 style="color: var(--gold-primary); font-family: 'Playfair Display', serif; margin-bottom: 10px;">Already Registered?</h3>
+                <p style="font-size: 0.85rem; margin-bottom: 15px; color: #ebd8ff;">Enter your email address or Registration Code to view your status:</p>
+                
+                <div style="display: flex; gap: 10px; max-width: 450px; margin: 0 auto;">
+                    <input type="text" id="lookupInput" placeholder="Enter Email or IBP Code" style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(0, 0, 0, 0.2); color: white;">
+                    <button type="button" onclick="checkRegistration()" class="btn-gold" style="padding: 10px 20px; border-radius: 8px; cursor: pointer;">CHECK</button>
+                </div>
 
-    <!-- THIS DIV IS REQUIRED FOR DISPLAYING RESULTS -->
-    <div id="lookupResult" style="text-align: left; font-size: 0.9rem;"></div>
-</div>
-</div>
+                <div id="lookupResult" style="text-align: left; font-size: 0.9rem;"></div>
+            </div>
 
             <!-- Footer Logo -->
             <div class="footer-logo">
@@ -216,50 +213,12 @@
                 </div>
                 <p class="footer-title">Inner Beauty Palace</p>
                 <p class="footer-tagline">THRIVING IN MAJESTY</p>
-                <p class="copyright">© 2026 Inner Beauty Palace. All rights reserved.</p>
+                <p class="copyright">©️ 2026 Inner Beauty Palace. All rights reserved.</p>
             </div>
         </div>
     </section>
 
+    <!-- Single, clean script reference -->
     <script src="index.js"></script>
 </body>
 </html>
-
-<script>
-async function checkRegistration() {
-    const query = document.getElementById('lookupInput').value.trim();
-    const resultDiv = document.getElementById('lookupResult');
-
-    if (!query) return alert('Please enter your email or registration code.');
-
-    resultDiv.innerHTML = "Searching...";
-
-    try {
-        const response = await fetch('http://localhost:5000/api/student/lookup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query })
-        });
-
-        const res = await response.json();
-
-        if (response.ok) {
-            const data = res.data;
-            resultDiv.innerHTML = `
-                <div style="background: rgba(224, 180, 79, 0.15); border: 1px solid var(--gold-primary); padding: 15px; border-radius: 10px; color: white;">
-                    <p style="color: var(--gold-primary); font-weight: bold;">Status: Registered ✅</p>
-                    <p><strong>Code:</strong> ${data.registrationCode}</p>
-                    <p><strong>Name:</strong> ${data.fullName}</p>
-                    <p><strong>Email:</strong> ${data.email}</p>
-                    <p><strong>Phone:</strong> ${data.phone}</p>
-                    <p><strong>Location:</strong> ${data.location}</p>
-                </div>
-            `;
-        } else {
-            resultDiv.innerHTML = `<p style="color: #ff8080;">${res.error}</p>`;
-        }
-    } catch (err) {
-        resultDiv.innerHTML = `<p style="color: #ff8080;">Server error. Please try again.</p>`;
-    }
-}
-</script>

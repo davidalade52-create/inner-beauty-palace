@@ -38,7 +38,7 @@ document.getElementById('registrationForm').addEventListener('submit', async (e)
     };
 
     try {
-        const response = await fetch(`${window.location.origin}/api/student/register`, {
+        const response = await fetch('/api/student/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -78,7 +78,7 @@ async function checkRegistration() {
     resultDiv.innerHTML = "<p style='color: #ebd8ff; margin-top: 10px;'>Searching...</p>";
 
     try {
-        const response = await fetch(`${window.location.origin}/api/student/lookup`, {
+        const response = await fetch('/api/student/lookup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query: query })
