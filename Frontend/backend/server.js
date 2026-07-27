@@ -112,10 +112,11 @@ app.get('/api/admin/registrations', async (req, res) => {
 });
 
 // --- SERVE STATIC FRONTEND ---
+// Serve static files from Frontend folder
 app.use(express.static(path.join(__dirname, '../')));
 
-// Fallback to index.html for any unmatched non-API GET routes
-app.get('*', (req, res) => {
+// Default route to load index.html
+app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
 });
 
