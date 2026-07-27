@@ -72,7 +72,7 @@ app.post('/api/student/register', async (req, res) => {
     }
 });
 
-// Student Lookup: Direct database query using Op.or
+// Student Lookup: Simple and fail-safe lookup
 app.post('/api/student/lookup', async (req, res) => {
     try {
         const { query } = req.body;
@@ -83,14 +83,13 @@ app.post('/api/student/lookup', async (req, res) => {
 
         const cleanQuery = query.trim().toLowerCase();
 
-        // Search directly in DB for matching email OR registration code
-        const student = await Registration.findOne({
-            where: {
-                [Op.or]: [
-                    sequelize.where(sequelize.fn('LOWER', sequelize.col('email')), cleanQuery),
-                    sequelize.where(sequelize.fn('LOWER', sequelize.col('registrationCode')), cleanQuery)
-                ]
-            }
+        // Fetch all rows and filter safely in JS memory
+        const allRegistrations = await Registration.findAll();
+        
+        const student = allRegistrations.find(item => {
+            const emailMatch = item.email && item.email.toLowerCase() === cleanQuery;
+            const codeMatch = item.registrationCode && item.registrationCode.toLowerCase() === cleanQuery;
+            return emailMatch || codeMatch;
         });
 
         if (!student) {
@@ -99,8 +98,8 @@ app.post('/api/student/lookup', async (req, res) => {
 
         return res.status(200).json({ data: student });
     } catch (err) {
-        console.error('Lookup search error:', err);
-        return res.status(500).json({ error: 'Search failed.' });
+        console.error('CRITICAL LOOKUP ERROR:', err);
+        return res.status(500).json({ error: 'Search failed: ' + err.message });
     }
 });
 
