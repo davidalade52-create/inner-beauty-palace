@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { Sequelize, DataTypes, Op } = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const path = require('path');
 
 const app = express();
@@ -72,7 +72,7 @@ app.post('/api/student/register', async (req, res) => {
     }
 });
 
-// Student Lookup: Simple and fail-safe lookup
+// Student Lookup: Fail-safe memory lookup
 app.post('/api/student/lookup', async (req, res) => {
     try {
         const { query } = req.body;
@@ -83,7 +83,6 @@ app.post('/api/student/lookup', async (req, res) => {
 
         const cleanQuery = query.trim().toLowerCase();
 
-        // Fetch all rows and filter safely in JS memory
         const allRegistrations = await Registration.findAll();
         
         const student = allRegistrations.find(item => {
