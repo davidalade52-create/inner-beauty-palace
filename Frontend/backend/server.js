@@ -43,7 +43,7 @@ app.post('/api/student/register', async (req, res) => {
             return res.status(400).json({ error: 'All fields are required.' });
         }
 
-        const existing = await Registration.findOne({ where: { email } });
+        const existing = await Registration.findOne({ where: { email: email.trim().toLowerCase() } });
         if (existing) {
             return res.status(409).json({ error: 'This email is already registered.' });
         }
@@ -52,7 +52,7 @@ app.post('/api/student/register', async (req, res) => {
 
         const record = await Registration.create({
             fullName,
-            email,
+            email: email.trim().toLowerCase(),
             phone,
             gender,
             location,
@@ -72,31 +72,35 @@ app.post('/api/student/register', async (req, res) => {
     }
 });
 
-// Student Lookup: Allow students to check details using Email or Code
+// Student Lookup: Direct database query using Op.or
 app.post('/api/student/lookup', async (req, res) => {
     try {
         const { query } = req.body;
 
-        if (!query) {
+        if (!query || !query.trim()) {
             return res.status(400).json({ error: 'Please enter your email or registration code.' });
         }
 
         const cleanQuery = query.trim().toLowerCase();
 
-        const allStudents = await Registration.findAll();
-        const student = allStudents.find(s => 
-            (s.email && s.email.toLowerCase() === cleanQuery) || 
-            (s.registrationCode && s.registrationCode.toLowerCase() === cleanQuery)
-        );
+        // Search directly in DB for matching email OR registration code
+        const student = await Registration.findOne({
+            where: {
+                [Op.or]: [
+                    sequelize.where(sequelize.fn('LOWER', sequelize.col('email')), cleanQuery),
+                    sequelize.where(sequelize.fn('LOWER', sequelize.col('registrationCode')), cleanQuery)
+                ]
+            }
+        });
 
         if (!student) {
             return res.status(404).json({ error: 'No registration record found.' });
         }
 
-        res.status(200).json({ data: student });
+        return res.status(200).json({ data: student });
     } catch (err) {
         console.error('Lookup search error:', err);
-        res.status(500).json({ error: 'Search failed.' });
+        return res.status(500).json({ error: 'Search failed.' });
     }
 });
 
@@ -112,10 +116,8 @@ app.get('/api/admin/registrations', async (req, res) => {
 });
 
 // --- SERVE STATIC FRONTEND ---
-// Serve static files from Frontend folder
 app.use(express.static(path.join(__dirname, '../')));
 
-// Default route to load index.html
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
 });
