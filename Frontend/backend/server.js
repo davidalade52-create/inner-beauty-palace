@@ -2,12 +2,22 @@ const express = require('express');
 const cors = require('cors');
 const { Sequelize, DataTypes } = require('sequelize');
 const path = require('path');
+const nodemailer = require('nodemailer'); // <-- 1. Added Nodemailer
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
+
+// --- EMAIL TRANSPORTER CONFIGURATION ---
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'davidalade52@gmail.com', 
+        pass: 'rfslmlezetulpkpn'  // 
+    }
+});
 
 // 1. Initialize SQLite Database
 const sequelize = new Sequelize({
@@ -58,6 +68,33 @@ app.post('/api/student/register', async (req, res) => {
             location,
             motivation,
             registrationCode
+        });
+
+        // --- SEND NOTIFICATION EMAIL TO HER ---
+        const mailOptions = {
+            from: '"Inner Beauty Palace Web" <davidalade52@gmail.com>', // 
+            to: 'innerbeautypalace@gmail.com',                           // 
+            subject: `🎉 New Masterclass Registration: ${record.fullName}`,
+            html: `
+                <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #e0b44f; border-radius: 10px; max-width: 500px;">
+                    <h2 style="color: #4a154b; margin-bottom: 15px;">New Student Registered!</h2>
+                    <p><strong>Full Name:</strong> ${record.fullName}</p>
+                    <p><strong>Email:</strong> ${record.email}</p>
+                    <p><strong>WhatsApp:</strong> ${record.phone}</p>
+                    <p><strong>Gender:</strong> ${record.gender}</p>
+                    <p><strong>Location:</strong> ${record.location}</p>
+                    <p><strong>Registration Code:</strong> <span style="color: #e0b44f; font-weight: bold; font-size: 1.1rem;">${record.registrationCode}</span></p>
+                    <p><strong>Motivation:</strong> ${record.motivation}</p>
+                </div>
+            `
+        };
+
+        transporter.sendMail(mailOptions, (err, info) => {
+            if (err) {
+                console.error('Error sending email notification:', err);
+            } else {
+                console.log('Notification email sent successfully:', info.response);
+            }
         });
 
         res.status(201).json({
