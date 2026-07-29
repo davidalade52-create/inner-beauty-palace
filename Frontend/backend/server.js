@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'davidalade52@gmail.com', 
-        pass: 'rfslmlezetulpkpn'  // 
+        pass: 'rfslmlezetulpkpn' 
     }
 });
 
@@ -72,8 +72,8 @@ app.post('/api/student/register', async (req, res) => {
 
         // --- SEND NOTIFICATION EMAIL TO HER ---
         const mailOptions = {
-            from: '"Inner Beauty Palace Web" <davidalade52@gmail.com>', // 
-            to: 'innerbeautypalace@gmail.com',                           // 
+            from: '"Inner Beauty Palace Web" <davidalade52@gmail.com>',
+            to: 'davidalade52@gmail.com',                           
             subject: `🎉 New Masterclass Registration: ${record.fullName}`,
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #e0b44f; border-radius: 10px; max-width: 500px;">
