@@ -72,8 +72,8 @@ app.post('/api/student/register', async (req, res) => {
 
         // --- SEND NOTIFICATION EMAIL TO HER ---
         const mailOptions = {
-            from: '"Inner Beauty Palace Web" <davidalade52@gmail.com>',
-            to: 'davidalade52@gmail.com',                           
+            from: 'davidalade52@gmail.com',
+            to: 'davidalade52@gmail.com',
             subject: `🎉 New Masterclass Registration: ${record.fullName}`,
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #e0b44f; border-radius: 10px; max-width: 500px;">
