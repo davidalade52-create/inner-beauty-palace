@@ -12,7 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 // --- RESEND EMAIL CONFIGURATION ---
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Safe initialization with fallback to prevent server crashes on startup
+const resend = new Resend(process.env.RESEND_API_KEY || 're_fallback_key');
 
 // 1. Initialize SQLite Database
 const sequelize = new Sequelize({
@@ -74,7 +75,7 @@ app.post('/api/student/register', async (req, res) => {
             data: record
         });
 
-        // Send notification email via Resend API (HTTP port 443)
+        // Send notification email via Resend API
         resend.emails.send({
             from: 'Inner Beauty Palace <onboarding@resend.dev>',
             to: process.env.EMAIL_USER || 'innerbeautypalace@gmail.com',
