@@ -77,7 +77,7 @@ app.post('/api/student/register', async (req, res) => {
         // Send notification email via Resend API (HTTP port 443)
         resend.emails.send({
             from: 'Inner Beauty Palace <onboarding@resend.dev>',
-            to: process.env.EMAIL_USER || 'davidalade52@gmail.com',
+            to: process.env.EMAIL_USER || 'innerbeautypalace@gmail.com',
             subject: `🎉 New Masterclass Registration: ${record.fullName}`,
             html: `
                 <div style="font-family: Arial, sans-serif; padding: 20px; border: 1px solid #e0b44f; border-radius: 10px; max-width: 500px;">
