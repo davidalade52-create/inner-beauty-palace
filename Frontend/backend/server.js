@@ -72,6 +72,7 @@ app.post('/api/student/register', async (req, res) => {
 
         const registrationCode = 'IBP-' + Math.random().toString(36).substring(2, 8).toUpperCase();
 
+        // 1. Save student to database
         const record = await Registration.create({
             fullName,
             email: normalizedEmail,
@@ -82,7 +83,14 @@ app.post('/api/student/register', async (req, res) => {
             registrationCode
         });
 
-        // --- SEND NOTIFICATION EMAIL ---
+        // 2. Send instant response to frontend (prevents hanging on screen)
+        res.status(201).json({
+            message: 'Registration saved successfully!',
+            registrationCode: record.registrationCode,
+            data: record
+        });
+
+        // 3. Send email notification asynchronously in the background
         const mailOptions = {
             from: `Inner Beauty Palace <${process.env.EMAIL_USER || 'davidalade52@gmail.com'}>`,
             to: process.env.EMAIL_USER || 'davidalade52@gmail.com',
@@ -101,18 +109,12 @@ app.post('/api/student/register', async (req, res) => {
             `
         };
 
-        // Await email delivery to properly log any issues on Render
-        try {
-            const info = await transporter.sendMail(mailOptions);
-            console.log('✅ Notification email sent:', info.response);
-        } catch (emailError) {
-            console.error('❌ CRITICAL EMAIL SEND ERROR:', emailError.message);
-        }
-
-        res.status(201).json({
-            message: 'Registration saved successfully!',
-            registrationCode: record.registrationCode,
-            data: record
+        transporter.sendMail(mailOptions, (mailErr, info) => {
+            if (mailErr) {
+                console.error('❌ Background Email Error:', mailErr.message);
+            } else {
+                console.log('✅ Background Notification Email Sent:', info.response);
+            }
         });
 
     } catch (err) {
