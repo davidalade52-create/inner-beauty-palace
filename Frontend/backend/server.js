@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const { Sequelize, DataTypes, Op } = require('sequelize');
 const path = require('path');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,23 +11,8 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// --- EMAIL TRANSPORTER CONFIGURATION ---
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL_USER || 'davidalade52@gmail.com', 
-        pass: process.env.EMAIL_PASS || 'rfslmlezetulpkpn'
-    }
-});
-
-// Verify email connection on startup
-transporter.verify((error) => {
-    if (error) {
-        console.error('❌ Email Transporter Error:', error.message);
-    } else {
-        console.log('✅ Mail server ready to send messages');
-    }
-});
+// --- RESEND EMAIL CONFIGURATION ---
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // 1. Initialize SQLite Database
 const sequelize = new Sequelize({
@@ -72,7 +57,6 @@ app.post('/api/student/register', async (req, res) => {
 
         const registrationCode = 'IBP-' + Math.random().toString(36).substring(2, 8).toUpperCase();
 
-        // 1. Save student to database
         const record = await Registration.create({
             fullName,
             email: normalizedEmail,
@@ -83,16 +67,16 @@ app.post('/api/student/register', async (req, res) => {
             registrationCode
         });
 
-        // 2. Send instant response to frontend (prevents hanging on screen)
+        // Send instant response to browser
         res.status(201).json({
             message: 'Registration saved successfully!',
             registrationCode: record.registrationCode,
             data: record
         });
 
-        // 3. Send email notification asynchronously in the background
-        const mailOptions = {
-            from: `Inner Beauty Palace <${process.env.EMAIL_USER || 'davidalade52@gmail.com'}>`,
+        // Send notification email via Resend API (HTTP port 443)
+        resend.emails.send({
+            from: 'Inner Beauty Palace <onboarding@resend.dev>',
             to: process.env.EMAIL_USER || 'davidalade52@gmail.com',
             subject: `🎉 New Masterclass Registration: ${record.fullName}`,
             html: `
@@ -107,14 +91,10 @@ app.post('/api/student/register', async (req, res) => {
                     <p><strong>Motivation:</strong> ${record.motivation}</p>
                 </div>
             `
-        };
-
-        transporter.sendMail(mailOptions, (mailErr, info) => {
-            if (mailErr) {
-                console.error('❌ Background Email Error:', mailErr.message);
-            } else {
-                console.log('✅ Background Notification Email Sent:', info.response);
-            }
+        }).then(data => {
+            console.log('✅ Email sent via Resend API:', data);
+        }).catch(err => {
+            console.error('❌ Resend API Error:', err.message);
         });
 
     } catch (err) {
@@ -123,7 +103,7 @@ app.post('/api/student/register', async (req, res) => {
     }
 });
 
-// Student Lookup: Efficient Direct Database Query
+// Student Lookup
 app.post('/api/student/lookup', async (req, res) => {
     try {
         const { query } = req.body;
@@ -134,7 +114,6 @@ app.post('/api/student/lookup', async (req, res) => {
 
         const cleanQuery = query.trim().toLowerCase();
 
-        // Direct SQL lookup using OR operator
         const student = await Registration.findOne({
             where: {
                 [Op.or]: [
@@ -167,10 +146,8 @@ app.get('/api/admin/registrations', async (req, res) => {
 });
 
 // --- SERVE STATIC FRONTEND ---
-// Static files served from parent directory (Frontend)
 app.use(express.static(path.join(__dirname, '../')));
 
-// Named wildcard param required by Express 5 / Node v24 (path-to-regexp v8 fix)
 app.get('/*splat', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
 });
