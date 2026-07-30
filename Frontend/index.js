@@ -25,6 +25,9 @@ function switchDay(dayNumber) {
 document.getElementById('registrationForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const responseMsg = document.getElementById('responseMsg');
+    const registrationForm = document.getElementById('registrationForm');
+    const successCard = document.getElementById('successCard');
+
     responseMsg.innerText = "Submitting registration...";
     responseMsg.style.color = "#ebd8ff";
 
@@ -47,9 +50,15 @@ document.getElementById('registrationForm').addEventListener('submit', async (e)
         const result = await response.json();
 
         if (response.ok) {
-            responseMsg.style.color = "#80ff80";
-            responseMsg.innerText = "Registration completed successfully!";
-            document.getElementById('registrationForm').reset();
+            // Clear message and hide the form
+            responseMsg.innerText = "";
+            registrationForm.style.display = "none";
+            
+            // Show the WhatsApp Success Card
+            if (successCard) {
+                successCard.style.display = "block";
+                successCard.scrollIntoView({ behavior: 'smooth' });
+            }
         } else {
             responseMsg.style.color = "#ff8080";
             responseMsg.innerText = result.error || "Registration failed.";
