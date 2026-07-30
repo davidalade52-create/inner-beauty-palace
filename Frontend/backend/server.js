@@ -84,7 +84,7 @@ app.post('/api/student/register', async (req, res) => {
 
         // --- SEND NOTIFICATION EMAIL ---
         const mailOptions = {
-            from: process.env.EMAIL_USER || 'davidalade52@gmail.com',
+            from: `Inner Beauty Palace <${process.env.EMAIL_USER || 'davidalade52@gmail.com'}>`,
             to: process.env.EMAIL_USER || 'davidalade52@gmail.com',
             subject: `🎉 New Masterclass Registration: ${record.fullName}`,
             html: `
@@ -101,14 +101,13 @@ app.post('/api/student/register', async (req, res) => {
             `
         };
 
-        // Async email handling so errors get logged properly
-        transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-                console.error('❌ Error sending email notification:', err.message);
-            } else {
-                console.log('✅ Notification email sent:', info.response);
-            }
-        });
+        // Await email delivery to properly log any issues on Render
+        try {
+            const info = await transporter.sendMail(mailOptions);
+            console.log('✅ Notification email sent:', info.response);
+        } catch (emailError) {
+            console.error('❌ CRITICAL EMAIL SEND ERROR:', emailError.message);
+        }
 
         res.status(201).json({
             message: 'Registration saved successfully!',
