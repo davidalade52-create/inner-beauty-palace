@@ -73,7 +73,7 @@
 
             <div class="day-card">
                 <span class="day-badge" id="cardDayBadge">DAY 1</span>
-                <h3 class="card-day-title" id="cardDayTitle">What You'll Learn</h3>
+                <h3 class="card-day-title" id="cardDayTitle">Craft Foundations</h3>
                 <p class="card-day-desc" id="cardDayDesc">
                     How to make handcrafted fashion items such as Wrapped Headband, Crinoline bow design , and more signature pieces.
                 </p>
@@ -81,8 +81,7 @@
 
             <div class="topics-grid">
                 <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Wrapped Headbands</span></div>
-                <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Crinoline bow design & accessorise with flowers
-</span></div>
+                <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Crinoline bow design & accessorise with flowers</span></div>
                 <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>Embellish Crinoline bow design with feathers</span></div>
                 <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>How to make Civil Wedding Birdcage veil Fascinator</span></div>
                 <div class="topic-pill"><i class="fa-solid fa-circle-check"></i><span>How to make a Pope cap Wedding Fascinator</span></div>
@@ -192,19 +191,19 @@
                 <button type="submit" class="btn-gold btn-submit">COMPLETE REGISTRATION</button>
             </form>
 
-            <!-- SUCCESS & WHATSAPP CARD (HIDDEN BY DEFAULT) -->
+            <!-- SUCCESS & WHATSAPP CARD (UPDATED WITH HER DIRECT WHATSAPP LINK) -->
             <div id="successCard" style="display: none; background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 12px; border: 1px solid #25D366; text-align: center; margin-top: 20px;">
                 <i class="fa-brands fa-whatsapp" style="font-size: 3rem; color: #25D366; margin-bottom: 15px;"></i>
                 <h3 style="color: #fff; font-family: 'Playfair Display', serif; font-size: 1.8rem; margin-bottom: 10px;">🎉 Registration Successful!</h3>
-                <p style="font-size: 0.95rem; color: #ebd8ff; margin-bottom: 25px; line-height: 1.5;">Your spot has been reserved. Please click the button below to join the official Masterclass WhatsApp Group to receive class updates!</p>
+                <p style="font-size: 0.95rem; color: #ebd8ff; margin-bottom: 25px; line-height: 1.5;">Your spot has been reserved. Click below to message us directly on WhatsApp with your registration code!</p>
                 
-                <!-- PASTE HER WHATSAPP GROUP INVITE LINK IN THE href BELOW -->
-                <a id="whatsappGroupBtn" href="https://chat.whatsapp.com/KA74DV6n5n6IVgF1yailCa?s=cl&p=a&ilr=4" target="_blank" class="btn-gold" style="background-color: #25D366; color: white; border: none; font-weight: bold; padding: 14px 28px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; border-radius: 8px;">
-                    <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> JOIN THE WHATSAPP GROUP
+                <!-- HER DIRECT WHATSAPP LINK -->
+                <a id="whatsappDmBtn" href="https://wa.link/wrqnm7" target="_blank" class="btn-gold" style="background-color: #25D366; color: white; border: none; font-weight: bold; padding: 14px 28px; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; border-radius: 8px;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> CONTINUE TO WHATSAPP DM
                 </a>
             </div>
 
-            <div id="responseMsg" style="margin-top: 15px;"></div>
+            <div id="responseMsg" style="margin-top: 15px; font-weight: bold; text-align: center;"></div>
 
             <div class="student-lookup-box" style="margin-top: 40px; background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 12px; border: 1px solid rgba(224, 180, 79, 0.3); text-align: center;">
                 <h3 style="color: var(--gold-primary); font-family: 'Playfair Display', serif; margin-bottom: 10px;">Already Registered?</h3>
@@ -215,7 +214,7 @@
                     <button type="button" onclick="checkRegistration()" class="btn-gold" style="padding: 10px 20px; border-radius: 8px; cursor: pointer;">CHECK</button>
                 </div>
 
-                <div id="lookupResult" style="text-align: left; font-size: 0.9rem;"></div>
+                <div id="lookupResult" style="text-align: left; font-size: 0.9rem; margin-top: 15px;"></div>
             </div>
 
             <!-- Footer Logo -->
@@ -232,7 +231,62 @@
         </div>
     </section>
 
-    <!-- Single, clean script reference -->
+    <!-- JavaScript Handling Form Submission & WhatsApp DM Redirect -->
+    <script>
+        const regForm = document.getElementById('registrationForm');
+        const responseMsg = document.getElementById('responseMsg');
+        const successCard = document.getElementById('successCard');
+        const whatsappDmBtn = document.getElementById('whatsappDmBtn');
+
+        if (regForm) {
+            regForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                responseMsg.style.color = "#ebd8ff";
+                responseMsg.textContent = "Processing registration...";
+
+                const payload = {
+                    fullName: document.getElementById('fullName').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    gender: document.getElementById('gender').value,
+                    location: document.getElementById('location').value.trim(),
+                    motivation: document.getElementById('motivation').value.trim()
+                };
+
+                try {
+                    const res = await fetch('/api/student/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const data = await res.json();
+
+                    if (res.ok) {
+                        responseMsg.textContent = "";
+                        regForm.style.display = "none";
+                        
+                        // Set up direct WhatsApp message link
+                        const waText = encodeURIComponent(`Hello! I just completed my registration on the website.\n\nName: ${payload.fullName}\nCode: ${data.registrationCode}`);
+                        const waUrl = `https://wa.link/wrqnm7?text=${waText}`;
+                        
+                        whatsappDmBtn.href = waUrl;
+                        successCard.style.display = "block";
+
+                        // Automatically redirect to WhatsApp DM in new tab
+                        window.open(waUrl, '_blank');
+                    } else {
+                        responseMsg.style.color = "#ff6b6b";
+                        responseMsg.textContent = data.error || "Registration failed. Please try again.";
+                    }
+                } catch (err) {
+                    console.error('Submission error:', err);
+                    responseMsg.style.color = "#ff6b6b";
+                    responseMsg.textContent = "Network error. Please try again.";
+                }
+            });
+        }
+    </script>
     <script src="index.js"></script>
 </body>
 </html>
